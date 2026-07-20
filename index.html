@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drone gallery</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="master-container">
+      <div class="filter-container">
+        <button
+          class="filter-btn"
+          data-filter="airframe"
+          onclick="highlightAirframe('Frame')"
+        >
+          Airframe
+        </button>
+        <button
+          class="filter-btn"
+          data-filter="propulsion"
+          onclick="highlightPropulsion('propulsion')"
+        >
+          Propulsion
+        </button>
+        <button
+          class="filter-btn"
+          data-filter="navigation"
+          onclick="highlightNavigation('Navigation')"
+        >
+          Navigation
+        </button>
+        <button
+          class="filter-btn"
+          data-filter="communication"
+          onclick="highlightCommunication('Communication')"
+        >
+          Communication
+        </button>
+        <button
+          class="filter-btn"
+          data-filter="munitions"
+          onclick="highlightMunitions('Munitions')"
+        >
+          Munitions
+        </button>
+      </div>
+
+      <div class="panel-container">
+        <div class="drone-container">
+          <iframe
+            title="Shahed drone"
+            id="drone-model"
+            frameborder="0"
+            allowfullscreen
+            mozallowfullscreen="true"
+            webkitallowfullscreen="true"
+            allow="autoplay; fullscreen; xr-spatial-tracking"
+            xr-spatial-tracking
+            execution-while-out-of-viewport
+            execution-while-not-rendered
+            web-share
+            width="100%"
+            height="680"
+            src="https://sketchfab.com/models/10382bef344c4a88abb4d1723b339fd4/embed?autospin=0&autostart=1&preload=1&transparent=1&ui_infos=0&ui_stop=0&ui_inspector=0&ui_watermark_link=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0"
+          >
+          </iframe>
+        </div>
+        <div class="timeline-container">
+          <div class="gallery-container">
+            <!--LANDING-->
+            <div class="landing"><img src="assets/arrow-up.png" style="opacity: 40%; max-width:22px; margin-top:0px; margin-bottom: 20px;"><br>Select a component from the menu to explore a timeline of its evolution</div>
+            <!--AIRFRAME-->
+            <div class="airframe-container">
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    White exterior, fiberglass shell lined with Nomex honeycomb
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-1.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-2.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">July 2023</div>
+                  <div class="timeline-description">
+                    Airframe lined with carbon fiber and foam sandwich structure
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-3.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-4.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">November 2023</div>
+                  <div class="timeline-description">Exterior painted black</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-5.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-6.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-7.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">January 2024</div>
+                  <div class="timeline-description">
+                    Intake duct for jet engine
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-11.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">December 2025</div>
+                  <div class="timeline-description">
+                    Wing stabilizers to accommodate R-60 missile mounted on
+                    fuselage
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-13.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-12.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">May 2026</div>
+                  <div class="timeline-description">
+                    Recess in fuselage for R-60 missile
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-8.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="airframe">
+                <div class="timeline-column">
+                  <div class="timeline-year">May 2026</div>
+                  <div class="timeline-description">
+                    Improved aerodynamics and reinforced structure for turbojet
+                    engine
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/a-9.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/a-10.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+            </div>
+
+            <!--PROPULSION-->
+            <div class="propulsion-container">
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    Mado MD-550 50-hp two-stroke four-cylinder piston engine
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-1.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-2.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-3.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <!-- <div class="timeline-year">September 2022</div> -->
+                  <div class="timeline-description">Iranian engine starter</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-7.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <!-- <div class="timeline-year">September 2022</div> -->
+                  <div class="timeline-description">
+                    18650 Lithium-ion battery
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-12.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-13.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-14.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-15.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <div class="timeline-year">July 2023</div>
+                  <div class="timeline-description">
+                    Xiamen Limbach L550E or Beijing MicroPilot Flight Control
+                    Systems MD-550 50-hp two-stroke four-cylinder piston engine
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-4.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-5.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <!-- <div class="timeline-year">July 2023</div> -->
+                  <div class="timeline-description">B-103 engine starter</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-8.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-9.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <!-- <div class="timeline-year">July 2023</div> -->
+                  <div class="timeline-description">
+                    DELTA CT AGM motorcycle starter battery
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-16.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-17.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-18.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <div class="timeline-year">August 2024</div>
+                  <div class="timeline-description">
+                    B-103 engine starter with updated material
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-10.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/e-11.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="propulsion">
+                <div class="timeline-column">
+                  <div class="timeline-year">February 2025</div>
+                  <div class="timeline-description">
+                    Telefly JT80 turbojet engine​
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/e-6.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+            </div>
+
+            <!--NAVIGATION-->
+            <div class="navigation-container">
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    Navigation board with SADRA IMU
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-5.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-6.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-7.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    Iranian flight control unit with eight layers of circuit
+                    boards
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-1.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-2.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    Nasir satellite receiver with four antenna elements
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-8.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-9.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-10.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-11.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-12.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">July 2023</div>
+                  <div class="timeline-description">
+                    B-101 flight control unit, four layers of circuit boards
+                    with 3D-printed supports and integrated IMU
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-3.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-4.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">July 2023</div>
+                  <div class="timeline-description">
+                    Kometa-M4 satellite receiver with four antenna elements
+                    integrated into B-105 satellite navigation unit
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-13.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-14.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-28.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">March 2024</div>
+                  <div class="timeline-description">
+                    Kometa-M8 satellite receiver with eight antenna elements
+                    under a radio-transparent hatch
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-15.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-16.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">January 2025</div>
+                  <div class="timeline-description">
+                    Round satellite receiver with eight antenna elements
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-17.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-18.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-19.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">February 2025</div>
+                  <div class="timeline-description">
+                    Kometa-M12 satellite receiver with twelve antenna elements
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-20.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-21.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">March 2025</div>
+                  <div class="timeline-description">
+                    Round satellite receiver with sixteen antenna elements
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-22.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-23.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">June 2025</div>
+                  <div class="timeline-description">
+                    Satellite receiver with sixteen elements in a four-by-four
+                    array
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-25.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/n-26.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="navigation">
+                <div class="timeline-column">
+                  <div class="timeline-year">February 2026</div>
+                  <div class="timeline-description">
+                    Satellite receiver with sixteen elements in a four-by-four
+                    array
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/n-27.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+            </div>
+
+            <!--COMMUNICATIONS-->
+            <div class="comms-container">
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">November 2023</div>
+                  <div class="timeline-description">
+                    4G modem with Kyivstar SIM card inside 3D-printed container
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-3.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-2.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-1.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">March 2024</div>
+                  <div class="timeline-description">
+                    Pan/tilt video camera bolted onto airframe
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-4.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2024</div>
+                  <div class="timeline-description">Starlink terminal</div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-5.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-6.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">February 2025</div>
+                  <div class="timeline-description">
+                    Raspberry Pi minicomputer with two ZTE 3G/LTE modemsl
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-7.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-8.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-9.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">December 2025</div>
+                  <div class="timeline-description">
+                    Mesh network modem paired with two network cameras (likely
+                    Hikvision DS-2CD1343G2-LIU)
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-10.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="communication">
+                <div class="timeline-column">
+                  <div class="timeline-year">December 2025</div>
+                  <div class="timeline-description">
+                    Honpho TS130C-01 camera with visual and thermal imaging
+                    capabilities and laser rangefinder
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-11.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img
+                    class="glightbox-active"
+                    src="assets/c-12.jpeg"
+                    alt="Communication"
+                  />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+            </div>
+
+            <!--MUNITIONS-->
+            <div class="munitions-container">
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2022</div>
+                  <div class="timeline-description">
+                    BCh-50 50-kg fragmentation-high explosive-shaped charge
+                    two-stage penetrator
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-1.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-2.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-3.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-4.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">July 2023</div>
+                  <div class="timeline-description">
+                    BSF-50 50-kg fragmentation-high explosive warhead
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-5.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">January 2024</div>
+                  <div class="timeline-description">
+                    BST-52 52-kg shaped charge-incendiary warhead with
+                    additional thermal effect
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-6.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-7.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-28.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">November 2024</div>
+                  <div class="timeline-description">
+                    OFZBCh-50 50-kg fragmentation-high explosive-incendiary
+                    warhead
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-8.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-9.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-26.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">November 2024</div>
+                  <div class="timeline-description">
+                    TBBCH-50M 50-kg thermobaric warhead
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-10.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-11.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-12.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">January 2025</div>
+                  <div class="timeline-description">
+                    TBBCH-50M 50-kg thermobaric warhead
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-13.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-14.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-11(2).jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">August 2025</div>
+                  <div class="timeline-description">
+                    Two PTM-3 anti-tank mines carried under wings
+                  </div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-27.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">September 2025</div>
+                  <div class="timeline-description">Two BST-52 warheads</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-17.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-18.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">December 2025</div>
+                  <div class="timeline-description">R-60 missile</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-19.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-20.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">January 2026</div>
+                  <div class="timeline-description">Verba MANPADe</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-21.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-22.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">March 2026</div>
+                  <div class="timeline-description">Two FPV drones</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-23.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+              <div class="gallery-row" data-category="munitions">
+                <div class="timeline-column">
+                  <div class="timeline-year">March 2026</div>
+                  <div class="timeline-description">Decoy R-60 missile</div>
+                </div>
+                <div class="gallery-column">
+                  <img class="glightbox-active" src="assets/m-25.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                  <img class="glightbox-active" src="assets/m-24.jpeg" />
+                  <figcaption class="dynamic-caption"></figcaption>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
