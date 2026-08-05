@@ -51,7 +51,9 @@ a {
 }
 
 /* Filters */
-.filter-container, .munitions-filter {
+.filter-container,
+.munitions-filter,
+.navigation-filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -60,7 +62,9 @@ a {
   padding-top: 20px;
 }
 
-.filter-btn, .munitions-btn  {
+.filter-btn,
+.munitions-btn,
+.navigation-btn {
   padding: 5px 10px;
   border: 0px solid #ccc;
   border-bottom: 4px solid #f5f5f5;
@@ -70,26 +74,26 @@ a {
   font-size: medium;
 }
 
-.munitions-filter {
+.munitions-filter, .navigation-filter {
   padding-top: 5px;
   padding-bottom: 50px;
 }
 
-.filter-btn.active, .munitions-btn.active {
+.filter-btn.active,
+.munitions-btn.active,
+.navigation-btn.active {
   color: #070707;
   border-bottom: 4px solid #0a2558;
   font-weight: bold;
   opacity: 100;
 }
 
-.filter-btn:hover, .munitions-btn:hover {
+.filter-btn:hover,
+.munitions-btn:hover,
+.navigation-btn:hover {
   background: #e2e2e2;
   opacity: 100;
   color: #1b1b1b;
-}
-
-.munitions-btn {
-  display: flex;
 }
 
 /* Row Configuration */

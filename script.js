@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     ".munitions-container .timeline-column"
   );
   const munitionsFilter = document.querySelector(".munitions-filter");
+  const navigationButtons = document.querySelectorAll(".navigation-btn");
+  const navigationItems = document.querySelectorAll(".navigation-container .timeline-column");
+  const navigationFilter = document.querySelector(".navigation-filter");
 
   munitionsButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -33,6 +36,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
   });
+
+  navigationButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+  
+      // Toggle active state between sub-buttons
+      navigationButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+  
+      const subFilter = button.getAttribute("data-subfilter");
+  
+      // Filter sub-items
+      navigationItems.forEach((item) => {
+        const subCat = item.getAttribute("data-subCategory");
+        if (subFilter === "all" || subCat === subFilter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });  
 
   // 1. Fetch and Parse the local CSV file
   let sourcesMap = {};
@@ -88,12 +113,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function applyFilter(filterValue) {
-    // 1. ALWAYS handle the sub-menu visibility first
+    // 1. ALWAYS handle the sub-menus visibility first
     if (munitionsFilter) {
       if (filterValue === "munitions") {
         munitionsFilter.style.display = "flex";
       } else {
         munitionsFilter.style.display = "none"; // Hides on landing page ("none") and other categories
+      }
+    }
+
+    if (navigationFilter) {
+      if (filterValue === "navigation") {
+        navigationFilter.style.display = "flex";
+      } else {
+        navigationFilter.style.display = "none"; // Hides on landing page ("none") and other categories
       }
     }
 
