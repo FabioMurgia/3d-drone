@@ -76,7 +76,18 @@
         <div class="timeline-container">
           <div class="gallery-container">
             <!--LANDING-->
-            <div class="landing"><img src="assets/arrow-up.png" style="opacity: 40%; max-width:22px; margin-top:0px; margin-bottom: 20px;"><br>Select a component from the menu to explore a timeline of its evolution</div>
+            <div class="landing">
+              <img
+                src="assets/arrow-up.png"
+                style="
+                  opacity: 40%;
+                  max-width: 22px;
+                  margin-top: 0px;
+                  margin-bottom: 20px;
+                "
+              /><br />Select a component from the menu to explore a timeline of
+              its evolution
+            </div>
             <!--AIRFRAME-->
             <div class="airframe-container">
               <div class="gallery-row" data-category="airframe">
@@ -122,16 +133,7 @@
                 </div>
               </div>
               <div class="gallery-row" data-category="airframe">
-                <div class="timeline-column">
-                  <div class="timeline-year">January 2024</div>
-                  <div class="timeline-description">
-                    Intake duct for jet engine
-                  </div>
-                </div>
-                <div class="gallery-column">
-                  <img class="glightbox-active" src="assets/a-11.jpeg" />
-                  <figcaption class="dynamic-caption"></figcaption>
-                </div>
+                <div class="gallery-column"></div>
               </div>
               <div class="gallery-row" data-category="airframe">
                 <div class="timeline-column">
@@ -312,7 +314,6 @@
               </div>
               <div class="gallery-row" data-category="navigation">
                 <div class="timeline-column">
-                  <div class="timeline-year">September 2022</div>
                   <div class="timeline-description">
                     Iranian flight control unit with eight layers of circuit
                     boards
@@ -327,7 +328,6 @@
               </div>
               <div class="gallery-row" data-category="navigation">
                 <div class="timeline-column">
-                  <div class="timeline-year">September 2022</div>
                   <div class="timeline-description">
                     Nasir satellite receiver with four antenna elements
                   </div>
@@ -360,7 +360,6 @@
               </div>
               <div class="gallery-row" data-category="navigation">
                 <div class="timeline-column">
-                  <div class="timeline-year">July 2023</div>
                   <div class="timeline-description">
                     Kometa-M4 satellite receiver with four antenna elements
                     integrated into B-105 satellite navigation unit
@@ -589,6 +588,18 @@
 
             <!--MUNITIONS-->
             <div class="munitions-container">
+              <!-- Sub-Menu Header (Always visible when Munitions is active) -->
+              <div class="munitions-filter">
+                <button class="munitions-btn active" data-subfilter="mun-1">
+                  Munition 1
+                </button>
+                <button class="munitions-btn" data-subfilter="mun-2">
+                  Munition 2
+                </button>
+                <button class="munitions-btn" data-subfilter="mun-3">
+                  Munition 3
+                </button>
+              </div>
               <div class="gallery-row" data-category="munitions">
                 <div class="timeline-column">
                   <div class="timeline-year">September 2022</div>

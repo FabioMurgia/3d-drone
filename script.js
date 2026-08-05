@@ -5,6 +5,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   const galleryRows = document.querySelectorAll(".gallery-row");
   const mainContainer = document.querySelector(".timeline-container");
   const landingEl = document.querySelector(".landing");
+  const munitionsButtons = document.querySelectorAll(".munitions-btn");
+  const munitionsItems = document.querySelectorAll(
+    ".munitions-container .timeline-column"
+  );
+  const munitionsFilter = document.querySelector(".munitions-filter");
+
+  munitionsButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Prevent event bubbling up to parent handlers
+      e.stopPropagation();
+
+      // Toggle active state on sub-buttons
+      munitionsButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const subFilter = button.getAttribute("data-subfilter");
+
+      // Show/hide sub-items
+      munitionsItems.forEach((item) => {
+        const subCat = item.getAttribute("data-subCategory");
+        if (subFilter === "all" || subCat === subFilter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });
 
   // 1. Fetch and Parse the local CSV file
   let sourcesMap = {};
@@ -60,19 +88,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function applyFilter(filterValue) {
-    // If no filter is active, show landing and hide all timeline rows
+    // 1. ALWAYS handle the sub-menu visibility first
+    if (munitionsFilter) {
+      if (filterValue === "munitions") {
+        munitionsFilter.style.display = "flex";
+      } else {
+        munitionsFilter.style.display = "none"; // Hides on landing page ("none") and other categories
+      }
+    }
+
+    // 2. Landing page check
     if (!filterValue || filterValue === "none") {
       if (landingEl) {
-        landingEl.style.display = "block"; // Force show via inline style
+        landingEl.style.display = "block";
       }
       galleryRows.forEach((row) => row.classList.add("hidden"));
       lightbox.reload();
-      return;
+      return; // Safe to return now!
     }
 
-    // If a filter IS active, completely hide the landing text
+    // 3. Category filtering (runs when a component IS selected)
     if (landingEl) {
-      landingEl.style.display = "none"; // Force hide via inline style
+      landingEl.style.display = "none";
     }
 
     galleryRows.forEach((row) => {
@@ -91,6 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     lightbox.reload();
   }
+
   const initialActiveButton = document.querySelector(".filter-btn.active");
   if (initialActiveButton) {
     const initialFilter = initialActiveButton.getAttribute("data-filter");
