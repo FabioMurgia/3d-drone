@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const landingEl = document.querySelector(".landing");
   const munitionsButtons = document.querySelectorAll(".munitions-btn");
   const munitionsItems = document.querySelectorAll(
-    ".munitions-container .timeline-column"
+    ".gallery-row[data-category='munitions']"
   );
   const munitionsFilter = document.querySelector(".munitions-filter");
   const navigationButtons = document.querySelectorAll(".navigation-btn");
-  const navigationItems = document.querySelectorAll(".navigation-container .timeline-column");
+  const navigationItems = document.querySelectorAll(
+    ".gallery-row[data-category='navigation']"
+  );
   const navigationFilter = document.querySelector(".navigation-filter");
 
   munitionsButtons.forEach((button) => {
@@ -40,14 +42,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   navigationButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
-  
-      // Toggle active state between sub-buttons
+
       navigationButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
-  
+
       const subFilter = button.getAttribute("data-subfilter");
-  
-      // Filter sub-items
+
       navigationItems.forEach((item) => {
         const subCat = item.getAttribute("data-subCategory");
         if (subFilter === "all" || subCat === subFilter) {
@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           item.classList.add("hidden");
         }
       });
+      if (typeof lightbox !== "undefined") lightbox.reload();
     });
-  });  
+  });
 
   // 1. Fetch and Parse the local CSV file
   let sourcesMap = {};
