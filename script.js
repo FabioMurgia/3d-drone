@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       });
     });
+    
   });
 
   navigationButtons.forEach((button) => {
@@ -178,6 +179,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
       }
     });
+    // 💡 FIX 1: Add reload here so GLightbox rebuilds controls for active items!
+    if (typeof lightbox !== "undefined") {
+      lightbox.reload();
+    }
   }
 
   const initialActiveButton = document.querySelector(".filter-btn.active");
