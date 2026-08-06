@@ -1,4 +1,7 @@
 let apiRef = null;
+// ___________________________________________
+//               API REFs
+// ___________________________________________
 
 document.addEventListener("DOMContentLoaded", async () => {
   const filterButtons = document.querySelectorAll(".filter-btn");
@@ -16,18 +19,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
   const navigationFilter = document.querySelector(".navigation-filter");
 
+  // =========================================================
+  //  INSIDE DOMContentLoaded (Near line 20-40)
+  // =========================================================
   munitionsButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      // Prevent event bubbling up to parent handlers
       e.stopPropagation();
 
-      // Toggle active state on sub-buttons
       munitionsButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
       const subFilter = button.getAttribute("data-subfilter");
 
-      // Show/hide sub-items
+      // --- 1. DOM ROW FILTERING ---
       munitionsItems.forEach((item) => {
         const subCat = item.getAttribute("data-subCategory");
         if (subFilter === "all" || subCat === subFilter) {
@@ -36,9 +40,31 @@ document.addEventListener("DOMContentLoaded", async () => {
           item.classList.add("hidden");
         }
       });
+
+      if (typeof lightbox !== "undefined") {
+        lightbox.reload();
+      }
+
+      // --- 2. SUB-FILTER 3D TRIGGERS ---
+      if (subFilter === "mun-1") {
+        // Warhead: Dims drone to 10%, warhead solid 100%
+        focusComponentXRay("warheads", 0.1);
+
+      } else if (subFilter === "mun-2") {
+        // Anti-Air Armament: Reveals "Missile" to 100%
+        showHiddenComponent("Missile", [1.8, 0.7, -0.8], [-0.2, -0.75, 0]);
+
+      } else if (subFilter === "mun-3") {
+        // Auxiliary Munitions: Reveals "Munitions" to 100%
+        showHiddenComponent("Munitions", [1.8, 0.7, -0.8], [-0.2, -0.75, 0]);
+
+      } else {
+        // Default / All: Reset opacities
+        resetMaterialOpacities();
+      }
     });
-    
   });
+
 
   navigationButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -115,12 +141,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function applyFilter(filterValue) {
-    // 1. ALWAYS handle the sub-menus visibility first
+    // 1. SUB-MENU VISIBILITY & 3D TRIGGERS
     if (munitionsFilter) {
       if (filterValue === "munitions") {
         munitionsFilter.style.display = "flex";
+
+        // A. Reset sub-buttons so "Warhead" (mun-1) is active visually
+        munitionsButtons.forEach((btn) => {
+          if (btn.getAttribute("data-subfilter") === "mun-1") {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+
+        // B. Trigger the Warhead X-Ray view + Highlight
+        focusComponentXRay("warheads", 0.1);
+
       } else {
-        munitionsFilter.style.display = "none"; // Hides on landing page ("none") and other categories
+        munitionsFilter.style.display = "none";
+        // Reset opacities back to default when leaving Munitions
+        resetMaterialOpacities();
       }
     }
 
@@ -128,10 +169,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (filterValue === "navigation") {
         navigationFilter.style.display = "flex";
       } else {
-        navigationFilter.style.display = "none"; // Hides on landing page ("none") and other categories
+        navigationFilter.style.display = "none";
       }
     }
-
     // 2. Landing page check
     if (!filterValue || filterValue === "none") {
       if (landingEl) {
@@ -262,6 +302,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         api.addEventListener("viewerready", () => {
           console.log("Sketchfab 3D Viewer is ready!");
           apiRef = api;
+
+          // 💡 INSTANTLY hide "Missile" and "Munitions" on load (0% opacity, no flash)
+          apiRef.getMaterialList(function (err, materials) {
+            if (err || !materials) return;
+            materials.forEach((mat) => {
+              if (mat.channels && mat.channels.Opacity) {
+                const matName = mat.name.toLowerCase();
+                if (matName === "missile" || matName === "munitions") {
+                  mat.channels.Opacity.enable = true;
+                  mat.channels.Opacity.factor = 0.0;
+                  apiRef.setMaterial(mat);
+                }
+              }
+            });
+          });
         });
       },
       error: function onError() {
@@ -275,23 +330,27 @@ document.addEventListener("DOMContentLoaded", async () => {
       camera: 1,
       preload: 1,
       ui_stop: 0,
-      transparent: 1,
       ui_animations: 0,
       ui_annotations: 0,
       ui_controls: 0,
       ui_fullscreen: 0,
       ui_general_controls: 0,
-      ui_help: 0,
       ui_hint: 0,
       ui_infos: 0,
       ui_inspector: 0,
-      ui_settings: 0,
       ui_vr: 1,
       ui_watermark_link: 0,
     });
   } else {
     console.warn("Sketchfab script missing or target iframe not found.");
   }
+});
+
+api.addEventListener("viewerready", () => {
+  console.log("Sketchfab 3D Viewer is ready!");
+  apiRef = api;
+  // Hides "Missile" & "Munitions" on initial viewer setup
+  resetMaterialOpacities();
 });
 
 // ___________________________________________
@@ -374,11 +433,103 @@ function highlightCommunication(materialName = "Communications") {
   );
 }
 
-function highlightMunitions(materialName = "Munitions") {
+// =========================================================
+//  OPACITY FUNCTIONS
+// =========================================================
+
+// 1. Core fade transition engine
+function fadeOpacities(getFinalTargetFactor, duration = 500) {
+  if (!apiRef) return;
+
+  apiRef.getMaterialList(function (err, materials) {
+    if (err || !materials) return;
+
+    const steps = 10;
+    const intervalTime = duration / steps;
+    let stepCount = 0;
+
+    const targets = materials.map((mat) => {
+      const matName = mat.name.toLowerCase();
+      const currentFactor = mat.channels?.Opacity?.factor ?? 1.0;
+      const targetFactor = getFinalTargetFactor(matName);
+      
+      return {
+        material: mat,
+        start: currentFactor,
+        target: targetFactor,
+        needsUpdate: Math.abs(currentFactor - targetFactor) > 0.01
+      };
+    });
+
+    const activeItems = targets.filter(item => item.needsUpdate);
+    if (activeItems.length === 0) return;
+
+    const timer = setInterval(() => {
+      stepCount++;
+      const progress = stepCount / steps;
+
+      activeItems.forEach(({ material, start, target }) => {
+        if (material.channels && material.channels.Opacity) {
+          material.channels.Opacity.enable = true;
+          material.channels.Opacity.factor = start + (target - start) * progress;
+          
+          try {
+            apiRef.setMaterial(material);
+          } catch (e) {
+            console.warn("Material update skipped:", e);
+          }
+        }
+      });
+
+      if (stepCount >= steps) {
+        clearInterval(timer);
+      }
+    }, intervalTime);
+  });
+}
+
+// 2. RESET FUNCTION
+function resetMaterialOpacities() {
+  fadeOpacities((matName) => {
+    if (matName === "missile" || matName === "munitions") return 0.0;
+    return 1.0;
+  }, 500);
+}
+
+// 3. WARHEAD X-RAY FUNCTION
+function focusComponentXRay(targetMaterialName = "warheads", ghostOpacity = 0.1) {
   highlightComponent(
-    materialName,
+    targetMaterialName,
     [1.8, 0.7, -0.8],
     [-0.2, -0.75, 0],
-    "Munitions"
+    targetMaterialName
   );
+
+  fadeOpacities((matName) => {
+    const isTarget =
+      matName === targetMaterialName.toLowerCase() ||
+      matName === "warheads" ||
+      matName === "warhead";
+
+    if (isTarget) return 1.0;
+    if (matName === "missile" || matName === "munitions") return 0.0;
+    return ghostOpacity;
+  }, 1000);
+}
+
+// 4. SHOW HIDDEN STORE FUNCTION
+function showHiddenComponent(targetMaterialName, cameraPos, cameraTarget) {
+  highlightComponent(
+    targetMaterialName,
+    cameraPos,
+    cameraTarget,
+    targetMaterialName
+  );
+
+  fadeOpacities((matName) => {
+    const isTarget = matName === targetMaterialName.toLowerCase();
+    if (isTarget) return 1.0;
+    if (matName === "missile" || matName === "munitions") return 0.0;
+    return 1.0;
+  }, 1000);
 }
