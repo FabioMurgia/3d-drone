@@ -148,9 +148,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     galleryRows.forEach((row) => {
       const category = row.getAttribute("data-category");
+      const subCat = row.getAttribute("data-subCategory");
       const anchors = row.querySelectorAll(".glightbox");
 
-      if (filterValue === "all" || category === filterValue) {
+      // Determine which sub-filter is currently active for this category
+      let activeSubFilter = "all";
+      if (category === "munitions" && munitionsButtons.length > 0) {
+        const activeBtn = document.querySelector(".munitions-btn.active");
+        if (activeBtn)
+          activeSubFilter = activeBtn.getAttribute("data-subfilter");
+      } else if (category === "navigation" && navigationButtons.length > 0) {
+        const activeBtn = document.querySelector(".navigation-btn.active");
+        if (activeBtn)
+          activeSubFilter = activeBtn.getAttribute("data-subfilter");
+      }
+
+      // Match main category AND sub-category
+      const matchesCategory = filterValue === "all" || category === filterValue;
+      const matchesSubCategory =
+        activeSubFilter === "all" || subCat === activeSubFilter;
+
+      if (matchesCategory && matchesSubCategory) {
         row.classList.remove("hidden");
         anchors.forEach((anchor) => anchor.classList.add("glightbox-active"));
       } else {
@@ -160,7 +178,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
       }
     });
-    lightbox.reload();
   }
 
   const initialActiveButton = document.querySelector(".filter-btn.active");
