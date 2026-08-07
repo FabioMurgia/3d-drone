@@ -389,7 +389,7 @@ function highlightPropulsion(materialName = "propulsion") {
 }
 
 function highlightNavigation(materialName = "Navigation") {
-  highlightComponent(materialName, [1.4, 3, 1.7], [0.2, 0, 0], "Flight Control");
+  highlightComponent(materialName, [1, 0.73, 3.09], [0.02, -0.49, -0.11], "Flight Control");
 }
 
 function highlightSatNav(materialName = "SatNav") {
@@ -398,7 +398,7 @@ function highlightSatNav(materialName = "SatNav") {
 }
 
 function highlightCommunication(materialName = "Communications") {
-  highlightComponent(materialName, [-2.04, 2.55, 0.83], [0.03, 0.01, -0.21], "Communication");
+  highlightComponent(materialName, [2.29, -2.37, 0.38], [-0.4, -0.63, -0.62], "Communication");
 }
 
 // =========================================================
