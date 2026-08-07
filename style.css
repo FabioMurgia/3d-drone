@@ -28,8 +28,7 @@ a {
   display: block;
   width: 50%;
   background-color: #ebebeb;
-  border-radius: 18px;
-}
+  border-radius: 18px;}
 
 .timeline-container {
   display: flex;

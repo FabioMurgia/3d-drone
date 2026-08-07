@@ -49,22 +49,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (subFilter === "mun-1") {
         // Warhead: Dims drone to 10%, warhead solid 100%
         focusComponentXRay("warheads", 0.1);
-
       } else if (subFilter === "mun-2") {
         // Anti-Air Armament: Reveals "Missile" to 100%
-        showHiddenComponent("Missile", [1.8, 0.7, -0.8], [-0.2, -0.75, 0]);
-
+        showHiddenComponent("Missile", [-1.44, 2.15, 0.69],
+          [0.25, -0.05, -0.03],);
       } else if (subFilter === "mun-3") {
         // Auxiliary Munitions: Reveals "Munitions" to 100%
         showHiddenComponent("Munitions", [1.8, 0.7, -0.8], [-0.2, -0.75, 0]);
-
       } else {
         // Default / All: Reset opacities
         resetMaterialOpacities();
       }
     });
   });
-
 
   navigationButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -157,7 +154,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // B. Trigger the Warhead X-Ray view + Highlight
         focusComponentXRay("warheads", 0.1);
-
       } else {
         munitionsFilter.style.display = "none";
         // Reset opacities back to default when leaving Munitions
@@ -302,6 +298,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         api.addEventListener("viewerready", () => {
           console.log("Sketchfab 3D Viewer is ready!");
           apiRef = api;
+          //  CAMERA COORDINATE LOGGER FOR DEV
+          apiRef.addEventListener("camerastop", () => {
+            apiRef.getCameraLookAt((err, camera) => {
+              if (err) return;
+
+              const pos = camera.position.map((n) => Number(n.toFixed(2)));
+              const target = camera.target.map((n) => Number(n.toFixed(2)));
+
+              console.log(`📸 Camera Coordinates:`);
+              console.log(`Position: [${pos.join(", ")}]`);
+              console.log(`Target:   [${target.join(", ")}]`);
+            });
+          });
 
           // 💡 INSTANTLY hide "Missile" and "Munitions" on load (0% opacity, no flash)
           apiRef.getMaterialList(function (err, materials) {
@@ -427,18 +436,19 @@ function highlightNavigation(materialName = "Navigation") {
 function highlightCommunication(materialName = "Communications") {
   highlightComponent(
     materialName,
-    [-0.9, 3.1, 1],
-    [0.2, 0, 0],
+    [-2.04, 2.55, 0.83],
+    [0.03, 0.01, -0.21],
     "Communication"
   );
 }
+
 
 // =========================================================
 //  OPACITY FUNCTIONS
 // =========================================================
 
 // 1. Core fade transition engine
-function fadeOpacities(getFinalTargetFactor, duration = 500) {
+function fadeOpacities(getFinalTargetFactor, duration = 1000) {
   if (!apiRef) return;
 
   apiRef.getMaterialList(function (err, materials) {
@@ -452,16 +462,16 @@ function fadeOpacities(getFinalTargetFactor, duration = 500) {
       const matName = mat.name.toLowerCase();
       const currentFactor = mat.channels?.Opacity?.factor ?? 1.0;
       const targetFactor = getFinalTargetFactor(matName);
-      
+
       return {
         material: mat,
         start: currentFactor,
         target: targetFactor,
-        needsUpdate: Math.abs(currentFactor - targetFactor) > 0.01
+        needsUpdate: Math.abs(currentFactor - targetFactor) > 0.01,
       };
     });
 
-    const activeItems = targets.filter(item => item.needsUpdate);
+    const activeItems = targets.filter((item) => item.needsUpdate);
     if (activeItems.length === 0) return;
 
     const timer = setInterval(() => {
@@ -471,8 +481,9 @@ function fadeOpacities(getFinalTargetFactor, duration = 500) {
       activeItems.forEach(({ material, start, target }) => {
         if (material.channels && material.channels.Opacity) {
           material.channels.Opacity.enable = true;
-          material.channels.Opacity.factor = start + (target - start) * progress;
-          
+          material.channels.Opacity.factor =
+            start + (target - start) * progress;
+
           try {
             apiRef.setMaterial(material);
           } catch (e) {
@@ -497,11 +508,14 @@ function resetMaterialOpacities() {
 }
 
 // 3. WARHEAD X-RAY FUNCTION
-function focusComponentXRay(targetMaterialName = "warheads", ghostOpacity = 0.1) {
+function focusComponentXRay(
+  targetMaterialName = "warheads",
+  ghostOpacity = 0.1
+) {
   highlightComponent(
     targetMaterialName,
-    [1.8, 0.7, -0.8],
-    [-0.2, -0.75, 0],
+    [-0.02, 1.98, 0.53],
+    [-0.01, -0.19, -0.64],
     targetMaterialName
   );
 
