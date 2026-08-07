@@ -1,26 +1,21 @@
 let apiRef = null;
-// ___________________________________________
-//               API REFs
-// ___________________________________________
 
 document.addEventListener("DOMContentLoaded", async () => {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const galleryRows = document.querySelectorAll(".gallery-row");
   const mainContainer = document.querySelector(".timeline-container");
   const landingEl = document.querySelector(".landing");
+  
   const munitionsButtons = document.querySelectorAll(".munitions-btn");
-  const munitionsItems = document.querySelectorAll(
-    ".gallery-row[data-category='munitions']"
-  );
+  const munitionsItems = document.querySelectorAll(".gallery-row[data-category='munitions']");
   const munitionsFilter = document.querySelector(".munitions-filter");
+  
   const navigationButtons = document.querySelectorAll(".navigation-btn");
-  const navigationItems = document.querySelectorAll(
-    ".gallery-row[data-category='navigation']"
-  );
+  const navigationItems = document.querySelectorAll(".gallery-row[data-category='navigation']");
   const navigationFilter = document.querySelector(".navigation-filter");
 
   // =========================================================
-  //  INSIDE DOMContentLoaded (Near line 20-40)
+  //  1. MUNITIONS SUB-FILTER BUTTONS
   // =========================================================
   munitionsButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -31,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const subFilter = button.getAttribute("data-subfilter");
 
-      // --- 1. DOM ROW FILTERING ---
+      // DOM Row Filtering
       munitionsItems.forEach((item) => {
         const subCat = item.getAttribute("data-subCategory");
         if (subFilter === "all" || subCat === subFilter) {
@@ -45,24 +40,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         lightbox.reload();
       }
 
-      // --- 2. SUB-FILTER 3D TRIGGERS ---
+      // 3D View Triggers
       if (subFilter === "mun-1") {
-        // Warhead: Dims drone to 10%, warhead solid 100%
         focusComponentXRay("warheads", 0.1);
       } else if (subFilter === "mun-2") {
-        // Anti-Air Armament: Reveals "Missile" to 100%
-        showHiddenComponent("Missile", [-1.44, 2.15, 0.69],
-          [0.25, -0.05, -0.03],);
+        showHiddenComponent("Missile", [-1.44, 2.15, 0.69], [0.25, -0.05, -0.03]);
       } else if (subFilter === "mun-3") {
-        // Auxiliary Munitions: Reveals "Munitions" to 100%
         showHiddenComponent("Munitions", [1.8, 0.7, -0.8], [-0.2, -0.75, 0]);
       } else {
-        // Default / All: Reset opacities
         resetMaterialOpacities();
       }
     });
   });
 
+  // =========================================================
+  //  2. NAVIGATION SUB-FILTER BUTTONS
+  // =========================================================
   navigationButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -72,6 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const subFilter = button.getAttribute("data-subfilter");
 
+      // DOM Row Filtering
       navigationItems.forEach((item) => {
         const subCat = item.getAttribute("data-subCategory");
         if (subFilter === "all" || subCat === subFilter) {
@@ -80,11 +74,29 @@ document.addEventListener("DOMContentLoaded", async () => {
           item.classList.add("hidden");
         }
       });
-      if (typeof lightbox !== "undefined") lightbox.reload();
+
+      if (typeof lightbox !== "undefined") {
+        lightbox.reload();
+      }
+
+      // 3D View Triggers
+      resetMaterialOpacities(); // Ensure standard opacity when switching nav modes
+
+      if (subFilter === "nav-1") {
+        // Flight Control
+        highlightNavigation();
+      } else if (subFilter === "nav-2") {
+        // Satellite Navigation ("SatNav")
+        highlightSatNav();
+      } else {
+        resetMaterialOpacities();
+      }
     });
   });
 
-  // 1. Fetch and Parse the local CSV file
+  // =========================================================
+  //  3. CSV DATA & IMAGE WRAPPERS
+  // =========================================================
   let sourcesMap = {};
   try {
     const response = await fetch("drone-sources.csv");
@@ -94,7 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Could not load sources.csv:", error);
   }
 
-  // 2. Wrap images and Map CSV data to HTML Elements
   galleryRows.forEach((row) => {
     const images = row.querySelectorAll("img");
 
@@ -102,25 +113,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       const imageSrc = img.getAttribute("src");
       const match = sourcesMap[imageSrc];
 
-      // --- FIX 1: Strip ONLY lightbox classes, preserving design/styling classes ---
       img.classList.remove("glightbox", "glightbox-active");
 
-      // Create the <a> wrapper tag on the fly
       const anchor = document.createElement("a");
       anchor.setAttribute("href", imageSrc);
-      anchor.classList.add("glightbox"); // Just base class, filter handles '-active'
+      anchor.classList.add("glightbox");
 
-      // Wrap the image
       img.parentNode.insertBefore(anchor, img);
       anchor.appendChild(img);
 
       if (match) {
-        // Set Alt Text on the image automatically
         img.setAttribute("alt", match.source_text);
-        // Set GLightbox description on the newly created anchor wrapper
         anchor.setAttribute("data-description", match.source_text);
 
-        // Look for the adjacent figcaption right next to our new anchor wrapper
         const figcaption = anchor.nextElementSibling;
         if (figcaption && figcaption.classList.contains("dynamic-caption")) {
           figcaption.innerHTML = `<a href="${match.link}" target="_blank" rel="noopener noreferrer">${match.source_text}</a>`;
@@ -129,7 +134,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // 3. Initialize GLightbox
   const lightbox = GLightbox({
     selector: ".glightbox-active",
     loop: true,
@@ -137,85 +141,78 @@ document.addEventListener("DOMContentLoaded", async () => {
     closeEffect: "zoom",
   });
 
+  // =========================================================
+  //  4. MAIN FILTER CONTROLLER
+  // =========================================================
   function applyFilter(filterValue) {
-    // 1. SUB-MENU VISIBILITY & 3D TRIGGERS
+    // Munitions Sub-Menu Control
     if (munitionsFilter) {
       if (filterValue === "munitions") {
         munitionsFilter.style.display = "flex";
 
-        // A. Reset sub-buttons so "Warhead" (mun-1) is active visually
         munitionsButtons.forEach((btn) => {
-          if (btn.getAttribute("data-subfilter") === "mun-1") {
-            btn.classList.add("active");
-          } else {
-            btn.classList.remove("active");
-          }
+          btn.classList.toggle("active", btn.getAttribute("data-subfilter") === "mun-1");
         });
 
-        // B. Trigger the Warhead X-Ray view + Highlight
         focusComponentXRay("warheads", 0.1);
       } else {
         munitionsFilter.style.display = "none";
-        // Reset opacities back to default when leaving Munitions
         resetMaterialOpacities();
       }
     }
 
+    // Navigation Sub-Menu Control
     if (navigationFilter) {
       if (filterValue === "navigation") {
         navigationFilter.style.display = "flex";
+
+        navigationButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.getAttribute("data-subfilter") === "nav-1");
+        });
+
+        highlightNavigation();
       } else {
         navigationFilter.style.display = "none";
       }
     }
-    // 2. Landing page check
+
+    // Landing Page State
     if (!filterValue || filterValue === "none") {
-      if (landingEl) {
-        landingEl.style.display = "block";
-      }
+      if (landingEl) landingEl.style.display = "block";
       galleryRows.forEach((row) => row.classList.add("hidden"));
       lightbox.reload();
-      return; // Safe to return now!
+      return;
     }
 
-    // 3. Category filtering (runs when a component IS selected)
-    if (landingEl) {
-      landingEl.style.display = "none";
-    }
+    if (landingEl) landingEl.style.display = "none";
 
+    // Row Visibility & Lightbox Sync
     galleryRows.forEach((row) => {
       const category = row.getAttribute("data-category");
       const subCat = row.getAttribute("data-subCategory");
       const anchors = row.querySelectorAll(".glightbox");
 
-      // Determine which sub-filter is currently active for this category
       let activeSubFilter = "all";
       if (category === "munitions" && munitionsButtons.length > 0) {
         const activeBtn = document.querySelector(".munitions-btn.active");
-        if (activeBtn)
-          activeSubFilter = activeBtn.getAttribute("data-subfilter");
+        if (activeBtn) activeSubFilter = activeBtn.getAttribute("data-subfilter");
       } else if (category === "navigation" && navigationButtons.length > 0) {
         const activeBtn = document.querySelector(".navigation-btn.active");
-        if (activeBtn)
-          activeSubFilter = activeBtn.getAttribute("data-subfilter");
+        if (activeBtn) activeSubFilter = activeBtn.getAttribute("data-subfilter");
       }
 
-      // Match main category AND sub-category
       const matchesCategory = filterValue === "all" || category === filterValue;
-      const matchesSubCategory =
-        activeSubFilter === "all" || subCat === activeSubFilter;
+      const matchesSubCategory = activeSubFilter === "all" || subCat === activeSubFilter;
 
       if (matchesCategory && matchesSubCategory) {
         row.classList.remove("hidden");
         anchors.forEach((anchor) => anchor.classList.add("glightbox-active"));
       } else {
         row.classList.add("hidden");
-        anchors.forEach((anchor) =>
-          anchor.classList.remove("glightbox-active")
-        );
+        anchors.forEach((anchor) => anchor.classList.remove("glightbox-active"));
       }
     });
-    // 💡 FIX 1: Add reload here so GLightbox rebuilds controls for active items!
+
     if (typeof lightbox !== "undefined") {
       lightbox.reload();
     }
@@ -223,10 +220,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const initialActiveButton = document.querySelector(".filter-btn.active");
   if (initialActiveButton) {
-    const initialFilter = initialActiveButton.getAttribute("data-filter");
-    applyFilter(initialFilter);
+    applyFilter(initialActiveButton.getAttribute("data-filter"));
   } else {
-    // No button is active on load -> Show the landing state!
     applyFilter("none");
   }
 
@@ -235,8 +230,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
 
-      const filterValue = button.getAttribute("data-filter");
-      applyFilter(filterValue);
+      applyFilter(button.getAttribute("data-filter"));
 
       if (mainContainer) {
         mainContainer.scrollTo({ top: 0 });
@@ -244,7 +238,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // Helper Function to handle descriptions containing commas safely
   function parseCSV(text) {
     const lines = text.split(/\r?\n/);
     const result = {};
@@ -276,16 +269,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       let link = columns[2] || "";
 
       if (image) {
-        result[image] = {
-          source_text: source_text,
-          link: link,
-        };
+        result[image] = { source_text, link };
       }
     }
     return result;
   }
 
-  // --- SKETCHFAB INITIALIZATION ---
+  // =========================================================
+  //  5. SKETCHFAB INITIALIZATION
+  // =========================================================
   const iframe = document.getElementById("drone-model");
   const modelUID = "10382bef344c4a88abb4d1723b339fd4";
 
@@ -298,21 +290,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         api.addEventListener("viewerready", () => {
           console.log("Sketchfab 3D Viewer is ready!");
           apiRef = api;
-          //  CAMERA COORDINATE LOGGER FOR DEV
+
+          // Camera Logger for development
           apiRef.addEventListener("camerastop", () => {
             apiRef.getCameraLookAt((err, camera) => {
-              if (err) return;
-
+              if (err || !camera) return;
               const pos = camera.position.map((n) => Number(n.toFixed(2)));
               const target = camera.target.map((n) => Number(n.toFixed(2)));
-
-              console.log(`📸 Camera Coordinates:`);
-              console.log(`Position: [${pos.join(", ")}]`);
-              console.log(`Target:   [${target.join(", ")}]`);
+              console.log(`📸 Camera Position: [${pos.join(", ")}]`);
+              console.log(`📸 Camera Target:   [${target.join(", ")}]`);
             });
           });
 
-          // 💡 INSTANTLY hide "Missile" and "Munitions" on load (0% opacity, no flash)
+          // Hides Missile & Munitions immediately on load
           apiRef.getMaterialList(function (err, materials) {
             if (err || !materials) return;
             materials.forEach((mat) => {
@@ -355,34 +345,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-api.addEventListener("viewerready", () => {
-  console.log("Sketchfab 3D Viewer is ready!");
-  apiRef = api;
-  // Hides "Missile" & "Munitions" on initial viewer setup
-  resetMaterialOpacities();
-});
+// =========================================================
+//  6. CORE SKETCHFAB HIGHLIGHT & CAMERA WRAPPERS
+// =========================================================
 
-// ___________________________________________
-//          MAIN FUNCTION (HELPER)
-// ___________________________________________
-
-function highlightComponent(
-  materialName,
-  cameraPos,
-  cameraTarget,
-  displayName
-) {
+function highlightComponent(materialName, cameraPos, cameraTarget, displayName) {
   if (!apiRef) {
     console.warn("Sketchfab API is not loaded yet.");
     return;
   }
 
-  // 1. Move the camera
-  apiRef.setCameraLookAt(cameraPos, cameraTarget, 2, function () {
-    console.log(`Camera moved to ${displayName} view`);
-  });
+  apiRef.setCameraLookAt(cameraPos, cameraTarget, 2);
 
-  // 2. Set highlight colors (Unified across all components)
   apiRef.setHighlightOptions({
     outlineWidth: 2,
     outlineColor: [1, 0.1, 0.1],
@@ -391,98 +365,99 @@ function highlightComponent(
     highlightDuration: 200,
   });
 
-  // 3. Retrieve and highlight the material
   apiRef.getMaterialList(function (err, materials) {
-    if (err) {
-      console.error("Error retrieving materials:", err);
-      return;
-    }
+    if (err || !materials) return;
 
-    // Find the material (case-insensitive)
-    var targetMaterial = materials.find(
+    const targetMaterial = materials.find(
       (m) => m.name.toLowerCase() === materialName.toLowerCase()
     );
 
     if (targetMaterial) {
       apiRef.highlightMaterial(targetMaterial);
-      console.log(`Highlighted: ${targetMaterial.name}`);
     } else {
       console.warn(`Material "${materialName}" not found`);
     }
   });
 }
 
-// ___________________________________________
-//          INDIVIDUAL WRAPPERS
-// ___________________________________________
-
 function highlightAirframe(materialName = "Frame") {
   highlightComponent(materialName, [0, 3, 3], [0, 0, 0], "Frame");
 }
 
 function highlightPropulsion(materialName = "propulsion") {
-  highlightComponent(
-    materialName,
-    [-0.86, -3.2, 1.17],
-    [0, -2, 0],
-    "Propulsion"
-  );
+  highlightComponent(materialName, [-0.86, -3.2, 1.17], [0, -2, 0], "Propulsion");
 }
 
 function highlightNavigation(materialName = "Navigation") {
-  highlightComponent(materialName, [1.4, 3, 1.7], [0.2, 0, 0], "Navigation");
+  highlightComponent(materialName, [1.4, 3, 1.7], [0.2, 0, 0], "Flight Control");
+}
+
+function highlightSatNav(materialName = "SatNav") {
+  // Update camera coordinates [Pos], [Target] using console logger
+  highlightComponent(materialName, [0.6, 0.07, 0.61], [0.47, -0.38, 0.15], "Satellite Navigation");
 }
 
 function highlightCommunication(materialName = "Communications") {
-  highlightComponent(
-    materialName,
-    [-2.04, 2.55, 0.83],
-    [0.03, 0.01, -0.21],
-    "Communication"
-  );
+  highlightComponent(materialName, [-2.04, 2.55, 0.83], [0.03, 0.01, -0.21], "Communication");
 }
 
-
 // =========================================================
-//  OPACITY FUNCTIONS
+//  7. OPACITY TRANSITION HELPERS
 // =========================================================
 
-// 1. Core fade transition engine
-function fadeOpacities(getFinalTargetFactor, duration = 1000) {
+const currentOpacities = new Map();
+let activeFadeInterval = null;
+
+function fadeOpacities(getFinalTargetFactor, duration = 500) {
   if (!apiRef) return;
+
+  if (activeFadeInterval) {
+    clearInterval(activeFadeInterval);
+  }
 
   apiRef.getMaterialList(function (err, materials) {
     if (err || !materials) return;
 
-    const steps = 10;
-    const intervalTime = duration / steps;
-    let stepCount = 0;
-
-    const targets = materials.map((mat) => {
+    materials.forEach((mat) => {
       const matName = mat.name.toLowerCase();
-      const currentFactor = mat.channels?.Opacity?.factor ?? 1.0;
-      const targetFactor = getFinalTargetFactor(matName);
-
-      return {
-        material: mat,
-        start: currentFactor,
-        target: targetFactor,
-        needsUpdate: Math.abs(currentFactor - targetFactor) > 0.01,
-      };
+      if (!currentOpacities.has(matName)) {
+        currentOpacities.set(matName, mat.channels?.Opacity?.factor ?? 1.0);
+      }
     });
 
-    const activeItems = targets.filter((item) => item.needsUpdate);
-    if (activeItems.length === 0) return;
+    const items = materials
+      .map((mat) => {
+        const matName = mat.name.toLowerCase();
+        const startFactor = currentOpacities.get(matName);
+        const targetFactor = getFinalTargetFactor(matName);
 
-    const timer = setInterval(() => {
-      stepCount++;
-      const progress = stepCount / steps;
+        return {
+          material: mat,
+          matName: matName,
+          start: startFactor,
+          target: targetFactor,
+          needsUpdate: Math.abs(startFactor - targetFactor) > 0.01,
+        };
+      })
+      .filter((item) => item.needsUpdate);
 
-      activeItems.forEach(({ material, start, target }) => {
+    if (items.length === 0) return;
+
+    const steps = 8;
+    const stepDuration = Math.max(duration / steps, 30);
+    let currentStep = 0;
+
+    activeFadeInterval = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      items.forEach(({ material, matName, start, target }) => {
         if (material.channels && material.channels.Opacity) {
+          const currentFactor = start + (target - start) * progress;
+
+          currentOpacities.set(matName, currentFactor);
           material.channels.Opacity.enable = true;
-          material.channels.Opacity.factor =
-            start + (target - start) * progress;
+          material.channels.Opacity.factor = currentFactor;
 
           try {
             apiRef.setMaterial(material);
@@ -492,14 +467,13 @@ function fadeOpacities(getFinalTargetFactor, duration = 1000) {
         }
       });
 
-      if (stepCount >= steps) {
-        clearInterval(timer);
+      if (currentStep >= steps) {
+        clearInterval(activeFadeInterval);
       }
-    }, intervalTime);
+    }, stepDuration);
   });
 }
 
-// 2. RESET FUNCTION
 function resetMaterialOpacities() {
   fadeOpacities((matName) => {
     if (matName === "missile" || matName === "munitions") return 0.0;
@@ -507,11 +481,7 @@ function resetMaterialOpacities() {
   }, 500);
 }
 
-// 3. WARHEAD X-RAY FUNCTION
-function focusComponentXRay(
-  targetMaterialName = "warheads",
-  ghostOpacity = 0.1
-) {
+function focusComponentXRay(targetMaterialName = "warheads", ghostOpacity = 0.1) {
   highlightComponent(
     targetMaterialName,
     [-0.02, 1.98, 0.53],
@@ -528,22 +498,16 @@ function focusComponentXRay(
     if (isTarget) return 1.0;
     if (matName === "missile" || matName === "munitions") return 0.0;
     return ghostOpacity;
-  }, 1000);
+  }, 500);
 }
 
-// 4. SHOW HIDDEN STORE FUNCTION
 function showHiddenComponent(targetMaterialName, cameraPos, cameraTarget) {
-  highlightComponent(
-    targetMaterialName,
-    cameraPos,
-    cameraTarget,
-    targetMaterialName
-  );
+  highlightComponent(targetMaterialName, cameraPos, cameraTarget, targetMaterialName);
 
   fadeOpacities((matName) => {
     const isTarget = matName === targetMaterialName.toLowerCase();
     if (isTarget) return 1.0;
     if (matName === "missile" || matName === "munitions") return 0.0;
     return 1.0;
-  }, 1000);
+  }, 500);
 }
