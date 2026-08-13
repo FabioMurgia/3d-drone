@@ -369,7 +369,7 @@ function highlightComponent(materialName, cameraPos, cameraTarget, displayName) 
     if (err || !materials) return;
 
     const targetMaterial = materials.find(
-      (m) => m.name.toLowerCase() === materialName.toLowerCase()
+      (m) => m.name.trim().toLowerCase() === materialName.trim().toLowerCase()
     );
 
     if (targetMaterial) {
@@ -385,11 +385,11 @@ function highlightAirframe(materialName = "Frame") {
 }
 
 function highlightPropulsion(materialName = "propulsion") {
-  highlightComponent(materialName, [-0.86, -3.2, 1.17], [0, -2, 0], "Propulsion");
+  highlightComponent(materialName, [-0.37, -3.08, 0.88], [-0.01, -1.86, 0.02], "Propulsion");
 }
 
 function highlightNavigation(materialName = "Navigation") {
-  highlightComponent(materialName, [1, 0.73, 3.09], [0.02, -0.49, -0.11], "Flight Control");
+  highlightComponent(materialName, [-0.97, 1.37, 1.44], [0.49, -0.02, -0.24], "Flight Control");
 }
 
 function highlightSatNav(materialName = "SatNav") {
@@ -398,7 +398,7 @@ function highlightSatNav(materialName = "SatNav") {
 }
 
 function highlightCommunication(materialName = "Communications") {
-  highlightComponent(materialName, [2.29, -2.37, 0.38], [-0.4, -0.63, -0.62], "Communication");
+  highlightComponent(materialName, [2.12, -2.6, 0.38], [-0.4, -0.63, -0.62], "Communication");
 }
 
 // =========================================================
