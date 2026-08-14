@@ -1,0 +1,44 @@
+category,subCategory,year,description,images
+airframe,,September 2022,"The original airframe is a white fiberglass shell lined with Nomex honeycomb.",assets/a-1.jpeg|assets/a-2.jpeg
+airframe,,July 2023,"The Russians replace the honeycomb lining with a thick foam layer sandwiched between carbon fiber-reinforced polymer coating.",assets/a-3.jpeg|assets/a-4.jpeg
+airframe,,November 2023,"Some drones are painted black to camouflage against the night sky.",assets/a-5.jpeg|assets/a-6.jpeg|assets/a-7.jpeg
+airframe,,December 2025,"Gerans carrying R-60 air-to-air missiles have large stabilizers installed at the wing tips.",assets/a-12.jpeg|assets/a-13.jpeg
+airframe,,May 2026,"A recess in the fuselage is made to hold an R-60 missile.",assets/a-8.jpeg
+airframe,,May 2026,"The Geran’s classic delta shape is altered slightly to improve aerodynamics when flying with a turbojet engine.",assets/a-9.jpeg|assets/a-10.jpeg
+propulsion,,September 2022,"The original Iranian engine is Mado’s MD-550, a 50-horsepower, two-stroke, four-cylinder piston engine reverse-engineered from a German Limbach design.",assets/e-1.jpeg|assets/e-2.jpeg|assets/e-3.jpeg
+propulsion,,,"The original Iranian engine starter.",assets/e-7.jpeg
+propulsion,,,"The Geran carries an 18650 Lithium-ion battery.",assets/e-12.jpeg|assets/e-13.jpeg|assets/e-14.jpeg|assets/e-15.jpeg
+propulsion,,July 2023,"The original Mado engine is swapped out for one of two Chinese alternatives: the Xiamen Limbach L550E and Beijing MicroPilot Flight Control Systems’ MD-550. Like the Mado MD-550, both Chinese models are 50-horsepower two-stroke four-cylinder piston engines.",assets/e-4.jpeg|assets/e-5.jpeg
+propulsion,,,"The Iranian engine starter is swapped out for the Russian B-103.",assets/e-8.jpeg
+propulsion,,,"The Li-ion battery is replaced by DELTA CT AGM, a motorcycle starter battery.",assets/e-16.jpeg|assets/e-17.jpeg
+propulsion,,August 2024,"The material for the Russian B-103 engine starter gets an upgrade.",assets/e-11.jpeg
+propulsion,,February 2025,"The Geran flies with a Chinese Telefly JT80 turbojet engine.",assets/e-6.jpeg
+navigation,nav-1,September 2022,"The original Iranian flight controller is composed of eight circuit boards.",assets/n-1.jpeg|assets/n-2.jpeg
+navigation,nav-1,,"A separate navigation board contains the Sadra IMU.",assets/n-6.jpeg|assets/n-7.jpeg
+navigation,nav-1,July 2023,"The new Russian B-101 flight control unit consists of four layers of circuit boards with 3D-printed supports and an integrated IMU.",assets/n-3.jpeg|assets/n-4.jpeg
+navigation,nav-2,July 2023,"The drone carries an Iranian Nasir satellite receiver with four antenna elements.",assets/n-8.jpeg|assets/n-9.jpeg|assets/n-10.jpeg|assets/n-11.jpeg
+navigation,nav-2,,"The Iranian satellite receiver is swapped out for the Russian Kometa-M4, a four-element satellite antenna integrated into a larger B-105 satellite navigation unit.",assets/n-13.jpeg|assets/n-28.jpeg
+navigation,nav-2,March 2024,"The Geran carries the eight-element Kometa-M8 satellite receiver under a radio-transparent hatch.",assets/n-15.jpeg|assets/n-16.jpeg
+navigation,nav-2,January 2025,"The Geran is equipped with a round eight-element satellite receiver.",assets/n-17.jpeg|assets/n-18.jpeg|assets/n-19.jpeg
+navigation,nav-2,February 2025,"Russia’s Kometa-M12 is introduced to the Geran, adding four new antenna elements.",assets/n-20.jpeg|assets/n-21.jpeg
+navigation,nav-2,March 2025,"The Geran carries a round satellite receiver with sixteen antenna elements.",assets/n-22.jpeg|assets/n-23.jpeg
+navigation,nav-2,February 2026,"A new satellite receiver contains sixteen elements in a four-by-four array.",assets/n-24.jpeg
+navigation,nav-2,,"The Geran gets a third sixteen-element CRPA model in Russia’s Kometa-M16.",assets/n-27.jpeg
+communication,,November 2023,"Geran carries a 4G modem with a Ukrainian Kyivstar SIM card in a 3D-printed box taped to the outside of the winglet, allowing it to transmit flight information back to Russia and enabling operators to flag spots where the drones are downed.",assets/c-1.jpeg|assets/c-2.jpeg|assets/c-3.jpeg
+communication,,March 2024,"A pan/tilt video camera is bolted onto the airframe, allowing the Geran to relay video of its surroundings back to Russia mid-flight.",assets/c-4.jpeg
+communication,,September 2024,"At least one Geran is equipped with a Starlink communication terminal.",assets/c-5.jpeg|assets/c-6.jpeg
+communication,,February 2025,"Geran carries a Raspberry Pi minicomputer with two 3G/LTE modems, a standardized version of the telemetry module seen in November 2023.",assets/c-7.jpeg|assets/c-8.jpeg|assets/c-9.jpeg
+communication,,July 2025,"Geran begins to fly with a Chinese Xingkai Tech mesh network radio modem, allowing each drone to act as a signal repeater for nearby units and forming an airborne network for two-way communication: drones send flight information back to Russia, while operators send control commands back in real time. The modems are paired with fixed turret network cameras from the Chinese company Hikvision.",assets/c-10(1).jpeg|assets/c-10(2).jpeg|assets/c-13.jpeg|assets/c-14.jpeg
+communication,,December 2025,"The Geran gets another camera upgrade. The Chinese Honpho TS130C-01 has long-wave IR capabilities, a laser rangefinder, and built-in computer vision.",assets/c-11.jpeg|assets/c-12.jpeg
+munitions,mun-1,September 2022,"The original Iranian warhead, BCh-50, was a 110-pound (50-kg) fragmentation-high explosive-shaped charge two-stage penetrator.",assets/m-1.jpeg|assets/m-2.jpeg|assets/m-3.jpeg
+munitions,mun-1,July 2023,"Introduction of BSF-50 (БСФ-50), a Russian high explosive 110-pound warhead.",assets/m-5.jpeg
+munitions,mun-1,January 2024,"The Geran begins carrying the BST-52 (БСТ-52), a 115-pound (52-kg) Russian shaped charge-incendiary warhead.",assets/m-6.jpeg|assets/m-7.jpeg|assets/m-28.jpeg
+munitions,mun-1,November 2024,"Debut of OFZBCh-50 (ОФЗБЧ-50), a 115-pound Russian fragmentation-high explosive-incendiary warhead.",assets/m-8.jpeg|assets/m-9.jpeg|assets/m-26.jpeg
+munitions,mun-1,November 2024,"TBBCh-50M (ТББЧ-50М), a 110-pound thermobaric warhead.",assets/m-10.jpeg|assets/m-11.jpeg
+munitions,mun-1,January 2025,"Introduction of the larger, 198-pound (90-kg) thermobaric warhead TBBCH-90.",assets/m-13.jpeg|assets/m-14.jpeg|assets/m-11(2).jpeg
+munitions,mun-1,September 2025,"Two BST-52 warheads are carried back-to-back inside the fuselage.",assets/m-17.jpeg|assets/m-18.jpeg
+munitions,mun-2,December 2025,"A Soviet R-60 (Р-60) air-to-air missile is mounted with an APU-60-1MD launcher atop the fuselage, likely to combat approaching anti-aircraft helicopters and interceptor drones.",assets/m-19.jpeg|assets/m-20.jpeg
+munitions,mun-2,January 2026,"A Verba MANPAD is mounted atop the fuselage in another attempt to target Ukrainian air defenses.",assets/m-21.jpeg|assets/m-22.jpeg
+munitions,mun-2,March 2026,"The Geran is equipped with mock R-60 missiles, further complicating Ukrainian threat assessment.",assets/m-24.jpeg|assets/m-25.jpeg
+munitions,mun-3,August 2025,"The Geran carries two PTM-3 (ПТМ-3) anti-tank mines, one under each wing.",assets/m-15.jpeg|assets/m-16.jpeg|assets/m-27.jpeg
+munitions,mun-3,March 2026,"The Geran carries two FPV drones, one mounted atop each wing.",assets/m-23.jpeg
