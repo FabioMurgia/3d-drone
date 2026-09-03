@@ -398,9 +398,9 @@ function highlightComponent(materialName, cameraPos, cameraTarget, displayName) 
 
   apiRef.setHighlightOptions({
     outlineWidth: 2,
-    outlineColor: [1, 0.1, 0.1],
+    outlineColor: [1.0, 0.522, 0.259],
     outlineDuration: 200,
-    highlightColor: [1, 0.1, 0.1],
+    highlightColor: [1.0, 0.522, 0.259],
     highlightDuration: 200,
   });
 
